@@ -1,0 +1,19 @@
+{
+  "name": "expo-error-log",
+  "version": "0.0.1",
+  "description": "An error loging utility for Expo",
+  "main": "captureSourceMap.js",
+  "author": "Andrew March",
+  "license": "ISC",
+  "dependencies": {
+    "source-map": "^0.7.3"
+  },
+  "files": [
+    "captureSourceMap.js",
+    "cli.js",
+    "setErrorHandler.js"
+  ],
+  "bin":{
+    "expo-error-log" : "./cli.js"
+  }
+}
