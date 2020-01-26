@@ -6,6 +6,7 @@
   "author": "Andrew March",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^3.0.0",
     "source-map": "^0.7.3"
   },
   "files": [
@@ -13,7 +14,7 @@
     "cli.js",
     "setErrorHandler.js"
   ],
-  "bin":{
-    "expo-error-log" : "./cli.js"
+  "bin": {
+    "expo-error-log": "./cli.js"
   }
 }
