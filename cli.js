@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env node
 
 var sourceMap = require('source-map');
 var fs = require('fs');

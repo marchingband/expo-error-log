@@ -1,10 +1,10 @@
 let fs = require('fs');
 
-module.export = options => {
+module.exports = options => {
     let {exp,log,projectRoot,iosSourceMap,androidSourceMap} = options;
     // fs.writeFileSync(projectRoot+'/'+exp.manifest.version+'.map', iosSourceMap)
     let sourceMapPath = projectRoot + "/source-maps/";
-    let mapFileName = exp.manifest.version + '.map';
+    let mapFileName = exp.version + '.map';
     if(!fs.existsSync(sourceMapPath)){
         fs.mkdirSync(sourceMapPath);
     }
