@@ -24,18 +24,56 @@ Now, everytime you `expo publish`, the sourceMap of your application will be sav
 note : it is necissary to incriment the version number in `app.json` before you run `expo publish`.
 If you forget, expo-error-log will remind you, and the `publish` logs will display an error.
 
-In app.js import with
+Next, add a script so we can easily excecute the `expo-error-log` cli from the command line. In package.json add:
+```
+{
+  "main": "node_modules/expo/AppEntry.js",
+  ...
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    // add this line
+    "expo-error-log": "expo-error-log"
+  },
+
+```
+
+You must provide your own method to push errors to a database of some kind.
+
+In app.js import the hook with
 
 `import { setErrorHandler } from 'expo-error-log/setErrorHandler.js'`
 
 And set up your logging service :
-(hint: if you place this in the render method of your app component, then statefull data will always be fresh!)
+(hint: if you place it in the render method of your main app component, then statefull data will always be fresh!)
+It is necissary to provide `setErrorHandeler` with the current version number of your app. The best way to do that is
+
+```
+expo install expo-constants
+```
+And in your main `app` component
+```
+import Constants from 'expo-constants'
+```
+
+Here is an example of an error handler, it uses firebase realtime database
 
 ```
 const myErrorHandler = async e =>{
-    await firebase.database().ref('/errors/').push(e)
-    await alert("There was an error"),
-    Util.reload()  
+  await firebase.database().ref('/errors/').push(e)
+  Alert.alert(
+    "ALERT", 
+    "Sorry there was an error, click to restart the app",
+    [
+      {
+        text:'OK',
+        onPress:()=>Updates.reload()
+      }
+    ]
+  )
 }
 
 setErrorHandler({
