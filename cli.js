@@ -62,7 +62,8 @@ let logs = [];
             output += '\n---------------------------------------------------------------------\n'
             logs.push({output,timestamp:e.timestamp})
         }catch(err){
-            output += r( 'LOGGER_ERROR: could not find map ' + e.mapId + '.map' ) + '\n'
+            output += r( 'LOGGER_ERROR: could not find source map at: ' + '\n' );
+            output += r( sourceMapPath + e.mapId + '.map'  + '\n' );
             output += '\n-------------------------------------------------------------------'
             logs.push({output,timestamp:e.timestamp})
         }
