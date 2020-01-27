@@ -95,4 +95,4 @@ For example with firebase, if the database rules are set to `read: true` for the
 
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
 
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab.png?raw=true)
