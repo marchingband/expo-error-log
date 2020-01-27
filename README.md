@@ -63,9 +63,17 @@ Here is an example of an error handler, it uses firebase realtime database
 
 ```
 const myErrorHandler = async e =>{
-    await firebase.database().ref('/errors/').push(e)
-    await alert("There was an error"),
-    Updates.reload()  
+  await firebase.database().ref('/errors/').push(e)
+  Alert.alert(
+    "ALERT", 
+    "Sorry there was an error, click to restart the app",
+    [
+      {
+        text:'OK',
+        onPress:()=>Updates.reload()
+      }
+    ]
+  )
 }
 
 setErrorHandler({
