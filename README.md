@@ -96,7 +96,9 @@ For example with firebase, if the database rules are set to `read: true` for the
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
 
 Alternatively you can write your own node script to download, process, and print the errors, using the `printErrors` function.
-`printErrors` expects an Array of error objects, as opposed to the cli which expects an Object with error objects as values, which is what you get when you `push` Objects to firebase. The cli calls `Object.values()` on the output from `curl`.
+`printErrors` expects an Array of error objects, as opposed to the cli which expects an Object with error objects as values, which is what you get when you `push` Objects to firebase (so the cli calls `Object.values()` on the output from `curl`).
+
+Here is an example of a script to fetch and print the errors
 ```
 // myScript.js
 const {printErrors} = require('expo-error-log/printErrors.js')
