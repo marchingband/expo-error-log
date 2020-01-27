@@ -9,10 +9,10 @@ module.exports = options => {
         fs.mkdirSync(sourceMapPath);
     }
     if(fs.existsSync(sourceMapPath + mapFileName)){
-        log("Source-map file for version " + exp.version + " already exists,");
-        log("did you forget to incriment your build number in app.json?");
-        log("EXPO-ERROR-LOG error: filename already exists, exiting");
-        log("no map file will be saved for this build");
+        log("\e[31m Source-map file for version " + exp.version + " already exists, \e[0m");
+        log("\e[31m did you forget to incriment your build number in app.json? \e[0m");
+        log("\e[31m EXPO-ERROR-LOG error: filename already exists, exiting \e[0m");
+        log("\e[31m no map file will be saved for this build \e[0m");
     } else {
         fs.writeFile(sourceMapPath + mapFileName, iosSourceMap, 'utf8', function (err) {
             if (err){return log(err); }
