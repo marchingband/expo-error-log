@@ -20,11 +20,12 @@ in app.json add
   }
 }
 ```
-Now, everytime you `expo publish`, the sourceMap of your application will be saved in your project root in a `source-maps` folder.
+Now, everytime you `expo publish`, the source map of your application will be saved in your project root in a `source-maps` folder.
 note : It is necissary to incriment the version number in `app.json` before you run `expo publish`.
 If you forget, expo-error-log will remind you, and the `publish` logs will display an error.
 
-Next, add a script so we can easily excecute the `expo-error-log` cli from the command line. In package.json add:
+Next, add a script so we can easily excecute the `expo-error-log` cli from the command line.
+In package.json add:
 ```
 {
   "main": "node_modules/expo/AppEntry.js",
@@ -46,12 +47,12 @@ In this function it is necissary to provide `setErrorHandeler` with the current 
 ```
 expo install expo-constants
 ```
-And in your main `app` component:
+And in your main `App` component:
 ```
 import Constants from 'expo-constants'
 ```
 
-In app.js import the hook with
+In `App.js` import the hook with
 
 `import { setErrorHandler } from 'expo-error-log/setErrorHandler.js'`
 
@@ -79,8 +80,8 @@ setErrorHandler({
   cb: myErrorHandler,
   // optional data propery for any extra data you wish to log
   data: {
-    currentView: State.getView(),
-    userName: State.getUserName(),
+    currentView: this.state.currentView,
+    userName: this.state.userName,
   },
   version: Constants.manifest.version
 })
@@ -95,6 +96,7 @@ For example with firebase, if the database rules are set to `read: true` for the
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
 
 Alternatively you can write your own node script to download, process, and print the errors, using the `printErrors` function.
+`printErrors` expects an Array of error objects, as opposed to the cli which expects an Object with error objects as values, which is what you get when you `push` Objects to firebase. The cli calls `Object.values()` on the output from `curl`.
 ```
 // myScript.js
 const {printErrors} = require('expo-error-log/printErrors.js')
