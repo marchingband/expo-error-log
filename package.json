@@ -12,7 +12,8 @@
   "files": [
     "captureSourceMap.js",
     "cli.js",
-    "setErrorHandler.js"
+    "setErrorHandler.js",
+    "printErrors.js"
   ],
   "bin": {
     "expo-error-log": "./cli.js"
