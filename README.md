@@ -93,3 +93,11 @@ To fetch, symbolicate, parse, and print your error logs to the console, simply r
 for example with firebase, if the database rules are set to `read: true` for the `errors` node
 
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
+
+alternatively you can write your own node script to download, process, and print the errors, using the `printErrors` function.
+```
+const {printErrors} = require('expo-error-log/printErrors.js')
+fetch("http://myDB.com")
+.then(r => r.json)
+.then(errors => printErrors(Object.values(errors))
+```
