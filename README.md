@@ -70,7 +70,8 @@ const myErrorHandler = e => {
         text:'OK',
         onPress:()=>Updates.reload()
       }
-    ]
+    ],
+    {cancelable: false}
   )
 }
 
