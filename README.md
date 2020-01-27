@@ -96,8 +96,11 @@ for example with firebase, if the database rules are set to `read: true` for the
 
 alternatively you can write your own node script to download, process, and print the errors, using the `printErrors` function.
 ```
+// myScript.js
 const {printErrors} = require('expo-error-log/printErrors.js')
+
 fetch("http://myDB.com")
 .then(r => r.json)
-.then(errors => printErrors(Object.values(errors))
+.then(errors => printErrors(errors)
 ```
+`node myScript.js`
