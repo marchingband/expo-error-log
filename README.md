@@ -42,6 +42,14 @@ Next, add a script so we can easily excecute the `expo-error-log` cli from the c
 ```
 
 You must provide your own method to push errors to a database of some kind.
+It is necissary to provide `setErrorHandeler` with the current version number of your app. The best way to do that is
+```
+expo install expo-constants
+```
+And in your main `app` component:
+```
+import Constants from 'expo-constants'
+```
 
 In app.js import the hook with
 
@@ -49,21 +57,11 @@ In app.js import the hook with
 
 And set up your logging service :
 (hint: if you place it in the render method of your main app component, then statefull data will always be fresh!)
-It is necissary to provide `setErrorHandeler` with the current version number of your app. The best way to do that is
-
-```
-expo install expo-constants
-```
-And in your main `app` component
-```
-import Constants from 'expo-constants'
-```
-
 Here is an example of an error handler, it uses firebase realtime database
 
 ```
-const myErrorHandler = async e =>{
-  await firebase.database().ref('/errors/').push(e)
+const myErrorHandler = e => {
+  firebase.database().ref('/errors/').push(e)
   Alert.alert(
     "ALERT", 
     "Sorry there was an error, click to restart the app",
