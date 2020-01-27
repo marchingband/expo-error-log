@@ -24,6 +24,23 @@ Now, everytime you `expo publish`, the sourceMap of your application will be sav
 note : it is necissary to incriment the version number in `app.json` before you run `expo publish`.
 If you forget, expo-error-log will remind you, and the `publish` logs will display an error.
 
+Next, add a script so we can easily excecute the expo-error-log cli from the command line. In package.json add:
+```
+{
+  "main": "node_modules/expo/AppEntry.js",
+  ...
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    // add this line
+    "expo-error-log": "expo-error-log"
+  },
+
+```
+
 In app.js import with
 
 `import { setErrorHandler } from 'expo-error-log/setErrorHandler.js'`
