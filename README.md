@@ -33,7 +33,7 @@ And set up your logging service :
 
 ```
 const myErrorHandler = async e =>{
-    await firebase.database().ref('/errors/').push({e})
+    await firebase.database().ref('/errors/').push(e)
     await alert("There was an error"),
     Util.reload()  
 }
