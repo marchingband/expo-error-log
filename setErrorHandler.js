@@ -8,6 +8,7 @@ let setErrorHandler = ({cb,data,version}) => {
                 message : error.toString(),
                 ...data
             })
-    })  
+        }
+    )  
 }
 module.exports = {setErrorHandler}
