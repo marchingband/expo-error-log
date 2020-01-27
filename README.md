@@ -94,3 +94,5 @@ To fetch, symbolicate, parse, and print your error logs to the console, simply r
 For example with firebase, if the database rules are set to `read: true` for the `errors` node
 
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
+
+![alt text](http://url/to/img.png)
