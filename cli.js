@@ -2,13 +2,13 @@
 var sourceMap = require('source-map');
 var fs = require('fs');
 var child = require('child_process');
-const chalk = require('chalk');
-const path = require('path')
+var chalk = require('chalk');
+var path = require('path')
 
-let basePath = process.env.PWD;
-let sourceMapPath = basePath + '/source-maps/';
+const basePath = process.env.PWD;
+const sourceMapPath = basePath + '/source-maps/';
 
-let command = process.argv[2];
+const command = process.argv[2];
 
 const y = x => chalk.yellow(x);
 const g = x => chalk.green(x);
@@ -23,7 +23,7 @@ var data;
     if(command == "with"){
         let customPathArg = process.argv[3];
         let customPath = path.resolve(basePath, customPathArg)
-        var f = require(customPath)
+        let f = require(customPath)
         rawData = await f();
         data = Object.values(rawData)
     } else {
@@ -56,7 +56,7 @@ var data;
                 }))
                 .filter(t=>t.column && t.row && t.name)
                 .map(t=>t.name.startsWith('http')?({row:t.row,column:t.column}):t);
-            var smc = await new sourceMap.SourceMapConsumer(map);
+            let smc = await new sourceMap.SourceMapConsumer(map);
             traceObjects.forEach(trace=>{
                 let line = parseInt(trace.row);
                 let column = parseInt(trace.column);
