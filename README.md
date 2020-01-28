@@ -2,7 +2,12 @@
 An error logging utility for Expo
 
 install with
-`npm install expo-error-log`
+
+```npm install expo-error-log```
+
+or
+
+```yarn add expo-error-log```
 
 in app.json add
 ```
