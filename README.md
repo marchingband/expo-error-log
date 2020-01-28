@@ -110,7 +110,7 @@ const myLogScript = async()=>{
     .catch(e=> console.log(e));
     let errors;
     await firebase.database().ref('/errors/').once('value',function(snap){
-        errors = Object.values(snap.val());
+        errors = snap.val();
     })
     return(errors)
 };
