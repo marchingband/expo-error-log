@@ -105,19 +105,9 @@ Note that myErrorFetchFunc.js must export a function directly, for example:
 const firebase = require('firebase');
 
 const myLogScript = async()=>{
-    var config = {
-      apiKey: env.myFirebaseAPIKey,
-      authDomain: "myApp.firebaseapp.com",
-      databaseURL: "https://myApp.firebaseio.com",
-      projectId: "myApp",
-      storageBucket: "myApp.appspot.com",
-      messagingSenderId: env.myMessgaeSenderID,
-      appId: env.myMapID,
-      measurementId: env.myMeasurementID
-    };
-    firebase.initializeApp(config);
+    firebase.initializeApp(env.firebaseConfig);
     await firebase.auth().signInWithEmailAndPassword(env.myLoginEmail,env.myLoginPassword)
-    .catch(e=>console.log("catch"+e));
+    .catch(e=> console.log(e));
     let errors;
     await firebase.database().ref('/errors/').once('value',function(snap){
         errors = Object.values(snap.val());
@@ -127,5 +117,6 @@ const myLogScript = async()=>{
 
 module.exports = myLogScript
 ```
+This function can be either synchronous or async (returning a Promise), and return an array or an object, like firebase does.
 
 ![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab.png?raw=true)
