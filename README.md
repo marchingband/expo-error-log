@@ -95,5 +95,37 @@ For example with firebase, if the database rules are set to `read: true` for the
 
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
 
+Alternatively, you can provide a custom function to fetch your errors from the database.
+Pass the argument `with` followed by a path to your file, relative to the project root.
+
+For example, if I placed my function in `/myExpoProject/errorFetch/myErrorFetchFunc.js`
+then `npm run expo-error-log with ./errorFetch/myErrorFetchFunc.js` would work.
+Note that myErrorFetchFunc.js must export a function directly, for example:
+```
+const firebase = require('firebase');
+
+const myLogScript = async()=>{
+    var config = {
+      apiKey: env.myFirebaseAPIKey,
+      authDomain: "myApp.firebaseapp.com",
+      databaseURL: "https://myApp.firebaseio.com",
+      projectId: "myApp",
+      storageBucket: "myApp.appspot.com",
+      messagingSenderId: env.myMessgaeSenderID,
+      appId: env.myMapID,
+      measurementId: env.myMeasurementID
+    };
+    firebase.initializeApp(config);
+    await firebase.auth().signInWithEmailAndPassword(env.myLoginEmail,env.myLoginPassword)
+    .catch(e=>console.log("catch"+e));
+    let errors;
+    await firebase.database().ref('/errors/').once('value',function(snap){
+        errors = Object.values(snap.val());
+    })
+    return(errors)
+};
+
+module.exports = myLogScript
+```
 
 ![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab.png?raw=true)
