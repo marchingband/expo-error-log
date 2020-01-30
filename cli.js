@@ -40,7 +40,7 @@ var data;
             if(e.message){
                 output += bld("error message:\n  ") + m(e.message) + '\n';
             } ;
-            let userData = Object.keys(e).filter(k=>!['stack','message','timestamp','mapId'].includes(k));
+            let userData = Object.keys(e).filter(k=>!['stack','message','timestamp','mapId','isFatal'].includes(k));
             if(userData){
                 output += bld('user data: {') + '\n';
             };

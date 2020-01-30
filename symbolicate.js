@@ -7,32 +7,32 @@ let basePath = process.env.PWD;
 let sourceMapPath = basePath + '/source-maps/';
 
 const symbolicate = async (errors) => {
-    const log = {
+    var log = {
         timestamp: Date.now(),
         datetime: new Date().toUTCString(),
         errors:[
-            {
-                isFatal: true,
-                timestamp: -1,
-                datetime: '',
-                message: '',
-                userData: {},
-                mapId: '',
-                mapPath: '',
-                err: undefined,
-                stack: [
-                    {
-                        name: '',
-                        source: '',
-                        line: -1,
-                        column: -1,
-                        shortSource: ''
-                    }
-                ]
-            }
+            // {
+            //     isFatal: true,
+            //     timestamp: -1,
+            //     datetime: '',
+            //     message: '',
+            //     userData: {},
+            //     mapId: '',
+            //     mapPath: '',
+            //     err: undefined,
+            //     stack: [
+            //         {
+            //             name: '',
+            //             source: '',
+            //             line: -1,
+            //             column: -1,
+            //             shortSource: ''
+            //         }
+            //     ]
+            // }
         ]
     };
-    let errorObjects = Object.values(errors);
+    const errorObjects = Object.values(errors);
     await Promise.all(errorObjects.map(async e=>{
         let error = {};
         try{
@@ -43,7 +43,7 @@ const symbolicate = async (errors) => {
             error.datetime = new Date(e.timestamp).toUTCString();
             error.message = e.message;
             error.userData = Object.keys(e)
-                .filter(k=>!['stack','message','timestamp','mapId'].includes(k))
+                .filter(k=>!['stack','message','timestamp','mapId','isFatal'].includes(k))
                 .reduce((obj,key)=>({...obj,[key]:e[key]}),{});
             let traces = e.stack.split('\n');
             let traceObjects = traces.map(t=>({
