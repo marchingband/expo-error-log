@@ -152,30 +152,31 @@ then `node
 
 `symbolicate.js` returns a log in this shape
 ```
-    const log = {
-        timestamp: Date.now(),
-        datetime: new Date().toUTCString(),
-        errors:[
-            {
-                isFatal: true,
-                timestamp: -1,
-                datetime: '',
-                message: '',
-                userData: {},
-                mapId: '',
-                mapPath: '',
-                err: undefined,
-                stack: [
-                    {
-                        name: '',
-                        source: '',
-                        line: -1,
-                        column: -1,
-                        shortSource: ''
-                    }
-                ]
-            }
-        ]
-    };
+{
+    timestamp: Date.now(),
+    datetime: new Date().toUTCString(),
+    errors:[
+        {
+            isFatal: true,
+            timestamp: -1,
+            datetime: '',
+            message: '',
+            userData: {},
+            mapId: '',
+            mapPath: '',
+            err: undefined,
+            stack: [
+                {
+                    name: '',
+                    source: '',
+                    line: -1,
+                    column: -1,
+                    shortSource: ''
+                },
+            ]
+        },
+    ]
+};
+
 ```
 ![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab2.png?raw=true)
