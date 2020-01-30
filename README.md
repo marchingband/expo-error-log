@@ -140,12 +140,11 @@ Or, you can use only the part of the package which symbolicates and parses your 
 const { symbolicate } = require('expo-error-log/symbolicate.js');
 const myLogFetchingScript = require('./helpers/myLogFetchingScript.js');
 
-(async ()=>{
-    const errors =  await myLogFetchingScript();
-    const log = await symbolicate(errors);
-    log.errors.forEach(e=>console.log(e))
-    process.exit()
-})()
+myLogFetchingScript().then(errors=>{
+    symbolicate(errors).then(log=>{
+        log.errors.forEach(e=>console.log(e))
+    })
+})
 ``` 
 then `node myErrorPrintingScript.js`
 
