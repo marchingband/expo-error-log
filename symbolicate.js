@@ -2,73 +2,82 @@
 
 var sourceMap = require('source-map');
 var fs = require('fs');
-const chalk = require('chalk');
 
 let basePath = process.env.PWD;
 let sourceMapPath = basePath + '/source-maps/';
 
-const y = x => chalk.yellow(x)
-const g = x => chalk.green(x)
-const b = x => chalk.blue(x)
-const r = x => chalk.red(x)
-const m = x => chalk.magenta(x)
-
-let logs = [];
-
-const logErrors = async (errors) => {
-    console.log(g('\n\n------------------------START-----------------------------------------'))
-    console.log('----------------------------------------------------------------------')
+const symbolicate = async (errors) => {
+    const log = {
+        timestamp: Date.now(),
+        datetime: new Date().toUTCString(),
+        errors:[
+            {
+                isFatal: true,
+                timestamp: -1,
+                datetime: '',
+                message: '',
+                userData: {},
+                mapId: '',
+                mapPath: '',
+                err: undefined,
+                stack: [
+                    {
+                        name: '',
+                        source: '',
+                        line: -1,
+                        column: -1,
+                        shortSource: ''
+                    }
+                ]
+            }
+        ]
+    };
     let errorObjects = Object.values(errors);
     await Promise.all(errorObjects.map(async e=>{
-        let output = '\n'
+        let error = {};
         try{
-            output += "timestamp : " + y( e.timestamp ) + '\n';
-            output += "date/time : " + y( new Date(e.timestamp).toUTCString() ) + '\n';
-            if(e.message){
-                output += "error message : " + m(e.message) + '\n';
-            } 
-            let userData = Object.keys(e).filter(k=>!['stack','message','timestamp','mapId'].includes(k))
-            if(userData){
-                output += y('user data: {') + '\n'
-            }
-            userData.forEach(k=> output += '  ' + k + ': ' + e[k] + '\n')
-            output += '}\n'
-            // will catch here if cant find source map
-            let map = fs.readFileSync(sourceMapPath + e.mapId +'.map', 'utf8');
-            output += 'stack trace:\n'
+            error.isFatal = e.isFatal;
+            error.mapId = e.mapId;
+            error.mapPath = sourceMapPath + e.mapId + '.map';
+            error.timestamp = e.timestamp;
+            error.datetime = new Date(e.timestamp).toUTCString();
+            error.message = e.message;
+            error.userData = Object.keys(e)
+                .filter(k=>!['stack','message','timestamp','mapId'].includes(k))
+                .reduce((obj,key)=>({...obj,[key]:e[key]}),{});
             let traces = e.stack.split('\n');
             let traceObjects = traces.map(t=>({
-                column : t.split(':')[t.split(':').length-1],
-                row : t.split(':')[t.split(':').length-2],
-                name : t.split('@')[0]
+                    column : t.split(':')[t.split(':').length-1],
+                    row : t.split(':')[t.split(':').length-2],
+                    name : t.split('@')[0]
                 }))
                 .filter(t=>t.column && t.row && t.name)
-                .map(t=>t.name.startsWith('http')?({row:t.row,column:t.column}):t)
+                .map(t=>t.name.startsWith('http')?({row:t.row,column:t.column}):t);
+            error.stack = [];
+            let stack = [];
+            let map = fs.readFileSync(sourceMapPath + e.mapId +'.map', 'utf8');
             var smc = await new sourceMap.SourceMapConsumer(map);
             traceObjects.forEach(trace=>{
                 let line = parseInt(trace.row);
                 let column = parseInt(trace.column);
-                let error = smc.originalPositionFor({
+                let symbolicatedError = smc.originalPositionFor({
                     line: line,
                     column: column
                 });
-                output += b( error.name + ": " ) + error.source 
-                output += y(' {line ' + error.line + ' : ' + error.column + '}') + '\n'
-            })
-            output += '\n---------------------------------------------------------------------\n'
-            logs.push({output,timestamp:e.timestamp})
+                stack.push({
+                    ...symbolicatedError,
+                    shortSource : symbolicatedError.source.replace(basePath, '.')
+                });
+            });
+            error.stack = stack;
         }catch(err){
-            output += err + '\n';
-            output += r( 'LOGGER_ERROR: could not find source map at: ' + '\n' );
-            output += r( sourceMapPath + e.mapId + '.map'  + '\n' );
-            output += '\n-------------------------------------------------------------------'
-            logs.push({output,timestamp:e.timestamp})
+            error.err = err;
         }
+        log.errors.push(error);
     }))
-    let sortedLogs = logs.sort((a,b)=>a.timestamp - b.timestamp).map(l=>l.output)
-    sortedLogs.forEach(l=>console.log(l))
-    console.log(g('----------------------------END-------------------------------------\n\n'))
+    let sortedErrors = log.errors.sort((a,b)=>a.timestamp - b.timestamp);
+    log.errors = sortedErrors;
+    return log
 };
 
-module.exports = {logErrors}
-// logErrors();
+module.exports = { symbolicate }

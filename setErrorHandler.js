@@ -6,6 +6,7 @@ let setErrorHandler = ({cb,data,version}) => {
                 stack : error.stack,
                 timestamp : Date.now(),
                 message : error.toString(),
+                isFatal : isFatal,
                 ...data
             })
         }
