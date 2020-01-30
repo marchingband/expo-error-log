@@ -148,7 +148,6 @@ const myLogFetchingScript = require('./helpers/myLogFetchingScript.js');
 })()
 ``` 
 then `node myErrorPrintingScript.js`
-then `node
 
 `symbolicate.js` returns a log in this shape
 ```
