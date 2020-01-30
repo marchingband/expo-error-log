@@ -177,4 +177,4 @@ then `node myErrorPrintingScript.js`
 };
 
 ```
-![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab2.png?raw=true)
+![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab_2.png?raw=true)
