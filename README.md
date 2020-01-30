@@ -134,3 +134,48 @@ or to append to the file
 ```
 npm run expo-error-log with ./myScript >> myLogFile.txt
 ```
+Or, you can use only the part of the package which symbolicates and parses your stack traces, and do with them as you please.
+```
+// myErrorPrintingScript.js
+const { symbolicate } = require('expo-error-log/symbolicate.js');
+const myLogFetchingScript = require('./helpers/myLogFetchingScript.js');
+
+(async ()=>{
+    const errors =  await myLogScript();
+    const log = await symbolicate(errors);
+    log.errors.forEach(e=>console.log(e))
+    process.exit()
+})()
+``` 
+then `node myErrorPrintingScript.js`
+then `node
+
+`symbolicate.js` returns a log in this shape
+```
+    const log = {
+        timestamp: Date.now(),
+        datetime: new Date().toUTCString(),
+        errors:[
+            {
+                isFatal: true,
+                timestamp: -1,
+                datetime: '',
+                message: '',
+                userData: {},
+                mapId: '',
+                mapPath: '',
+                err: undefined,
+                stack: [
+                    {
+                        name: '',
+                        source: '',
+                        line: -1,
+                        column: -1,
+                        shortSource: ''
+                    }
+                ]
+            }
+        ]
+    };
+```
+![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab2.png?raw=true)
