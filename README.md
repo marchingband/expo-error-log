@@ -141,7 +141,7 @@ const { symbolicate } = require('expo-error-log/symbolicate.js');
 const myLogFetchingScript = require('./helpers/myLogFetchingScript.js');
 
 (async ()=>{
-    const errors =  await myLogScript();
+    const errors =  await myLogFetchingScript();
     const log = await symbolicate(errors);
     log.errors.forEach(e=>console.log(e))
     process.exit()
