@@ -4,7 +4,7 @@ var sourceMap = require('source-map');
 var fs = require('fs');
 
 let basePath = process.env.PWD;
-let sourceMapPath = basePath + '/source-maps/';
+let sourceMapPath = basePath + '/.source_maps/';
 
 const symbolicate = async (errors) => {
     var log = {

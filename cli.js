@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const path = require('path')
 
 let basePath = process.env.PWD;
-let sourceMapPath = basePath + '/source-maps/';
+let sourceMapPath = basePath + '/.source_maps/';
 
 let command = process.argv[2];
 
