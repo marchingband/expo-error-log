@@ -25,7 +25,7 @@ in app.json add
   }
 }
 ```
-Now, everytime you `expo publish`, the source map of your application will be saved in your project root in a `.source_maps` folder.
+Now, everytime you `expo publish`, the source maps of your application will be saved in your project root in a `.source_maps` folder.
 
 Next, add a script so we can easily excecute the `expo-error-log` cli from the command line.
 In package.json add:
