@@ -115,7 +115,7 @@ module.exports = myLogScript
 ```
 This function can be either synchronous or async (returning a Promise), and return an array or an object, like firebase does.
 
-![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab.png?raw=true)
+![alt text](https://github.com/marchingband/expo-error-log/blob/master/screen_grab.png?raw=true)
 
 If you want to save the output of expo-error-log, you can use this bash command
 ```
@@ -168,4 +168,4 @@ then `node myErrorPrintingScript.js`
 };
 
 ```
-![alt text](https://github.com/marchingband/expo-error-log/blob/master/screengrab_2.png?raw=true)
+![alt text](https://github.com/marchingband/expo-error-log/blob/master/screen_grab_2.png?raw=true)
