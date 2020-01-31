@@ -139,6 +139,8 @@ myLogFetchingScript().then(errors=>{
 ``` 
 then `node myErrorPrintingScript.js`
 
+![alt text](https://github.com/marchingband/expo-error-log/blob/master/screen_grab_2.png?raw=true)
+
 `symbolicate.js` returns a log in this shape
 ```
 {
@@ -168,4 +170,3 @@ then `node myErrorPrintingScript.js`
 };
 
 ```
-![alt text](https://github.com/marchingband/expo-error-log/blob/master/screen_grab_2.png?raw=true)
