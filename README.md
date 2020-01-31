@@ -25,9 +25,7 @@ in app.json add
   }
 }
 ```
-Now, everytime you `expo publish`, the source map of your application will be saved in your project root in a `source-maps` folder.
-note : It is necissary to incriment the version number in `app.json` before you run `expo publish`.
-If you forget, expo-error-log will remind you, and the `publish` logs will display an error.
+Now, everytime you `expo publish`, the source map of your application will be saved in your project root in a `.source_maps` folder.
 
 Next, add a script so we can easily excecute the `expo-error-log` cli from the command line.
 In package.json add:
@@ -48,15 +46,6 @@ In package.json add:
 ```
 
 You must provide your own method to push errors to a database of some kind.
-In this function it is necissary to provide `setErrorHandeler` with the current version number of your app, which it uses to correlate errors with their respective source maps. The best way to do that is
-```
-expo install expo-constants
-```
-And in your main `App` component:
-```
-import Constants from 'expo-constants'
-```
-
 In `App.js` import the hook with
 
 `import { setErrorHandler } from 'expo-error-log/setErrorHandler.js'`
@@ -87,8 +76,10 @@ setErrorHandler({
   data: {
     currentView: this.state.currentView,
     userName: this.state.userName,
-  },
-  version: Constants.manifest.version
+    appVersion: Constants.manifest.version,
+    OS: Platform.OS,
+    OSVersion: Platform.Version
+  }
 })
 ```
 
@@ -101,7 +92,7 @@ For example with firebase, if the database rules are set to `read: true` for the
 `npm run expo-error-log "curl https://myProjectName.firebaseio.com/errors.json"`
 
 Alternatively, you can provide a custom function to fetch your errors from the database.
-Pass the argument `with` followed by a path to your file, relative to the project root.
+Pass the argument `with` followed by a path to your fetching script, relative to the project root.
 
 For example, if I placed my function in `/myExpoProject/errorFetch/myErrorFetchFunc.js`
 then `npm run expo-error-log with ./errorFetch/myErrorFetchFunc.js` would work.
