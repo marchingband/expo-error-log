@@ -9,6 +9,10 @@ or
 
 ```yarn add expo-error-log```
 
+also you must install expo-constants
+
+```expo install expo-constants```
+
 in app.json add
 ```
 {
